@@ -1,0 +1,21 @@
+Split things up into multiple layers:
+- Literal writing
+- tracking whitespace and formatting (formatting is part of the base writer. I think it
+probably belongs there.)
+
+x tracking tag stack for auto-close of tags
+x tracking namespaces
+
+- write as recursive 'builder'?
+- write as eventemitter?
+- state machine?
+- write functional instead of building up xml string as side effect
+- enable/disable pretty print 
+
+- automatic namespace handling? currently we just handle namespaces and prefixes
+manually by appending prefix to tag name and putting xmlns declarations in as 
+attributes.
+
+I decided not to track closing tags for auto-close. I also did not track namespace
+scopes for automatic handling of prefixes and URIs. This may be added at some point
+or I may do a wrapper around this basic writer that adds that logic.
