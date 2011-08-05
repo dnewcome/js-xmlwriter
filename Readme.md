@@ -19,7 +19,7 @@ the document is written to provide a streaming document.
 
 	console.log( writer.xml );
 
-The code yeields the following document:
+The code yields the following document:
 
     <test foo="bar" foo2="bar2">
     	<test2>
