@@ -5,7 +5,7 @@ XmlWriter class in the .NET framework.
 
 # Usage
 
-Create an instance of the writer and call methods sequentially to write out text to 
+Create an instance of the writer and call methods sequentially to write XML text to 
 the writer's internal xml string variable. This variable may be read in chunks as 
 the document is written to provide a streaming document.
 
