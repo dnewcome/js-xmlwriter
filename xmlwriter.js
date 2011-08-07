@@ -1,7 +1,27 @@
 function XmlWriter() {
 	this.depth = 0;
 	this.xml = "";
+	this.useEmitter = false;
+	this.chunksize = 1024;
 }
+
+if( typeof EventEmitter != 'undefined' ) {
+	XmlWriter.prototype = new EventEmitter();
+}
+
+/**
+ * Raise registered listeners through the inherited
+ * EventEmitter interface, clearing xml buffer.
+ */
+XmlWriter.prototype.doEmit = function() {
+	if( this.xml.length > this.chunksize ) {
+		// copy string - not sure if we 
+		// need to do this in some environments
+		var chunk = this.xml;
+		this.emit( 'data', chunk );
+		this.xml = "";
+	}
+};
 
 /**
 * Write an element
@@ -15,7 +35,13 @@ XmlWriter.prototype.writeElement = function( name, attrs ) {
 XmlWriter.prototype.writeElementClose = function( name ) {
 	this.depth--;
 	this.xml += this.createIndent( this.depth ) + '</' + name + '>\n';
+	// TODO: we only try to emit data when closing an element.
+	// later we should look at the buffer size when writing instead.
+	if( this.useEmitter == true ) {
+		this.doEmit();
+	}
 };
+
 XmlWriter.prototype.createIndent = function( num ) {
 	num = num || this.depth;
 	var retval = ''; 
