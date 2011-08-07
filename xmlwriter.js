@@ -14,7 +14,9 @@ if( typeof EventEmitter != 'undefined' ) {
  * EventEmitter interface, clearing xml buffer.
  */
 XmlWriter.prototype.doEmit = function() {
-	if( this.xml.length > this.chunksize ) {
+	// we flush output after the last closing tag
+	// should check xml spec to make sure this assumption is valid
+	if( this.xml.length > this.chunksize || this.depth == 0 ) {
 		// copy string - not sure if we 
 		// need to do this in some environments
 		var chunk = this.xml;
